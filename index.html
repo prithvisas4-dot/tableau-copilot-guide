@@ -1,6 +1,2189 @@
 
-<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Tableau Copilot Guide</title></head>
+!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tableau × Copilot Practical Guide</title>
+ 
+<style>
+ 
+/* -----------------------------------------------------
+   GLOBAL THEME
+------------------------------------------------------ */
+ 
+:root {
+    --navy: #0d1b2a;
+    --purple: #A100FF;
+    --teal: #00d4aa;
+    --yellow: #ffdd55;
+    --red: #ff4f4f;
+    --mono: "Courier New", Courier, monospace;
+}
+ 
+body {
+    margin: 0;
+    background: var(--navy);
+    color: white;
+    font-family: var(--mono);
+    line-height: 1.6;
+}
+ 
+h1, h2, h3, h4 {
+    font-family: var(--mono);
+    font-weight: bold;
+}
+ 
+section {
+    padding: 120px 10vw;
+}
+ 
+/* -----------------------------------------------------
+   HERO SECTION
+------------------------------------------------------ */
+ 
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 0 20px;
+}
+ 
+.pill {
+    position: absolute;
+    top: 40px;
+    padding: 6px 18px;
+    border: 1px solid white;
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    opacity: 0.85;
+}
+ 
+.hero h1 {
+    font-size: 42px;
+    line-height: 1.3;
+    max-width: 900px;
+}
+ 
+.hero h1 span {
+    color: var(--purple);
+}
+ 
+.subtext {
+    margin-top: 20px;
+    font-size: 16px;
+    opacity: 0.8;
+    max-width: 650px;
+}
+ 
+.cta-area {
+    margin-top: 40px;
+    display: flex;
+    gap: 16px;
+}
+ 
+.btn {
+    padding: 14px 22px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    border: 2px solid var(--purple);
+    text-decoration: none;
+    color: white;
+    transition: 0.2s ease;
+}
+ 
+.btn-solid {
+    background: var(--purple);
+}
+ 
+.btn-outline {
+    background: transparent;
+}
+ 
+.scroll-hint {
+    position: absolute;
+    bottom: 25px;
+    font-size: 14px;
+    opacity: 0.7;
+    animation: fadeBounce 2s infinite ease-in-out;
+}
+ 
+@keyframes fadeBounce {
+    0% { opacity: 0.4; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(6px); }
+    100% { opacity: 0.4; transform: translateY(0); }
+}
+ 
+/* Scroll progress bar */
+#progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: var(--purple);
+    width: 0%;
+    z-index: 9999;
+}
+ 
+/* -----------------------------------------------------
+   TWO-COLUMN SECTION
+------------------------------------------------------ */
+ 
+.info-section {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+    background: var(--navy);
+}
+ 
+.info-left {
+    flex: 1;
+    font-size: 18px;
+    max-width: 550px;
+}
+ 
+.info-left a {
+    color: var(--purple);
+    text-decoration: underline;
+}
+ 
+.info-right {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+ 
+.stat-tile {
+    border: 1px dashed rgba(255,255,255,0.25);
+    padding: 24px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    text-align: center;
+}
+ 
+.stat-number {
+    font-size: 40px;
+    font-weight: bold;
+}
+ 
+.stat-number.purple { color: var(--purple); }
+.stat-number.teal   { color: var(--teal); }
+ 
+.stat-label {
+    font-size: 14px;
+    opacity: 0.9;
+    letter-spacing: 1px;
+}
+ 
+.stat-sub {
+    font-size: 12px;
+    opacity: 0.6;
+}
+ 
+/* -----------------------------------------------------
+   USE CASE CARDS (10)
+------------------------------------------------------ */
+ 
+.usecase-section {
+    background: var(--navy);
+    text-align: center;
+}
+ 
+.usecase-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    max-width: 900px;
+    margin: auto;
+}
+ 
+.usecase-card {
+    display: flex;
+    gap: 22px;
+    padding: 24px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+}
+ 
+.card-num {
+    font-size: 42px;
+    opacity: 0.15;
+    font-weight: bold;
+}
+ 
+.card-title {
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+ 
+.card-desc {
+    font-size: 14px;
+    opacity: 0.75;
+}
+ 
+.prompt-box {
+    background: rgba(161,0,255,0.15);
+    padding: 10px;
+    border-radius: 6px;
+    position: relative;
+}
+ 
+.copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 11px;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border-radius: 4px;
+    border: none;
+}
+ 
+/* -----------------------------------------------------
+   BEFORE/AFTER TRANSFORMATION SECTION
+------------------------------------------------------ */
+ 
+.transform-section {
+    text-align: center;
+}
+ 
+.transform-card {
+    margin: auto;
+    background: rgba(255,255,255,0.04);
+    padding: 26px 30px;
+    border-radius: 10px;
+    border-left: 4px dashed;
+    max-width: 750px;
+}
+ 
+/* -----------------------------------------------------
+   SCENARIO CARDS
+------------------------------------------------------ */
+ 
+.scenario-section {
+    text-align: center;
+}
+ 
+.scenario-card {
+    background: rgba(255,255,255,0.04);
+    padding: 28px 30px;
+    border-left: 4px solid #ffdd55;
+    border-radius: 10px;
+    margin-bottom: 32px;
+}
+ 
+/* -----------------------------------------------------
+   WHAT YOU'LL MASTER
+------------------------------------------------------ */
+ 
+.master-section {}
+ 
+.master-grid {
+    display: grid;
+    gap: 26px;
+    max-width: 900px;
+    margin: auto;
+}
+ 
+.master-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(255,255,255,0.25);
+    padding: 28px 30px;
+    border-radius: 12px;
+}
+ 
+/* -----------------------------------------------------
+   JOURNEY LEVEL CARDS
+------------------------------------------------------ */
+ 
+.copilot-journey {
+    text-align: center;
+}
+ 
+.journey-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 1000px;
+    margin: auto;
+}
+ 
+.journey-card {
+    background: rgba(255,255,255,0.04);
+    border-radius: 14px;
+    padding: 32px;
+    border: 2px solid transparent;
+    text-decoration: none;
+    color: white;
+    transition: 0.25s ease;
+}
+ 
+/* -----------------------------------------------------
+   LEVEL SECTIONS (BEGINNER, INTERMEDIATE, ADVANCED)
+------------------------------------------------------ */
+ 
+.level-beginner,
+.level-intermediate,
+.level-advanced {
+    padding-left: 40px;
+    margin-left: 4px;
+}
+ 
+.level-beginner { border-left: 6px solid var(--teal); }
+.level-intermediate { border-left: 6px solid var(--yellow); }
+.level-advanced { border-left: 6px solid var(--purple); }
+ 
+/* -----------------------------------------------------
+   LIMITATIONS SECTION + CARDS
+------------------------------------------------------ */
+ 
+.tableau-limitations {}
+ 
+.limitation-card {
+    border-left: 4px solid var(--red);
+    background: rgba(255,255,255,0.04);
+    padding: 32px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+}
+ 
+.limit-block h4 {
+    color: var(--purple);
+}
+ 
+/* -----------------------------------------------------
+   QUICK REFERENCE TABLE
+------------------------------------------------------ */
+ 
+.limit-ref-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+ 
+.limit-ref-table thead tr {
+    background: var(--purple);
+    color: white;
+}
+ 
+.limit-ref-table tbody tr:nth-child(odd) {
+    background: #0b1624;
+}
+ 
+.limit-ref-table tbody tr:nth-child(even) {
+    background: #0f1c30;
+}
+ 
+/* -----------------------------------------------------
+   DIAGNOSTIC BANNER
+------------------------------------------------------ */
+ 
+.limitations-diagnostic-banner {
+    background: #39006e;
+    text-align: center;
+}
+ 
+.diagnostic-prompt-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid white;
+    padding: 24px;
+    border-radius: 12px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+}
+ 
+/* -----------------------------------------------------
+   BONUS SECTION (Excel + Meetings)
+------------------------------------------------------ */
+ 
+.bonus-copilot-usage {}
+ 
+.bonus-card {
+    background: rgba(255,255,255,0.05);
+    border-left: 4px solid var(--purple);
+    padding: 28px;
+    border-radius: 12px;
+}
+ 
+/* -----------------------------------------------------
+   FOOTER + BACK TO TOP
+------------------------------------------------------ */
+ 
+.guide-footer {
+    text-align: center;
+    padding: 60px 20px;
+}
+ 
+.back-to-top {
+    position: fixed;
+    bottom: 26px;
+    right: 26px;
+    background: var(--purple);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.25s ease;
+}
+ 
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+ 
+</style>
+</head>
+ 
 <body>
-<!-- FULL HTML SHOULD BE PASTED HERE FROM CHUNKS -->
-<p>Placeholder: Insert the full combined HTML content from all chunks here.</p>
-</body></html>
+ 
+<div id="progress-bar"></div>
+ 
+<!-- ============================================
+     HERO SECTION (START)
+============================================ -->
+<section class="hero">
+    <div class="pill">TABLEAU × COPILOT · PRACTICAL GUIDE · Your Company Name 2025</div>
+    <h1>You’re about to solve any Tableau requirement.<br><span>with Microsoft Copilot.</span></h1>
+    <p class="subtext">No guesswork. No Stack Overflow rabbit holes. Just the right Copilot prompt — that actually works.</p>
+ 
+    <div class="cta-area">
+        #coverageSee What's Covered ↓</a>
+        #usecases class="btn btn-outline">Jump to Use Cases →</a>
+    </div>
+ 
+    <div class="scroll-hint">Scroll to explore<br>↓</div>
+</section>
+ 
+<!-- ============================================
+     HERO (END)
+============================================ -->
+
+  <!-- ============================================
+     TWO-COLUMN SECTION (WHY TABLEAU USERS STRUGGLE)
+============================================ -->
+<section class="info-section">
+ 
+    <div class="info-left">
+        Most Tableau users spend 70% of their time figuring out how to build something —
+        not actually building it. Copilot changes that. Ask the right question, get the right answer,
+        #ship the right viz</a>.
+    </div>
+ 
+    <div class="info-right">
+        <div class="stat-tile">
+            <div class="stat-number purple">70%</div>
+            <div class="stat-label">TIME SAVED</div>
+            <div class="stat-sub">on repeated Tableau tasks</div>
+        </div>
+ 
+        <div class="stat-tile">
+            <div class="stat-number teal">10+</div>
+            <div class="stat-label">USE CASES</div>
+            <div class="stat-sub">covered with ready prompts</div>
+        </div>
+ 
+        <div class="stat-tile">
+            <div class="stat-number purple">0</div>
+            <div class="stat-label">PRIOR COPILOT</div>
+            <div class="stat-sub">experience needed</div>
+        </div>
+ 
+        <div class="stat-tile">
+            <div class="stat-number teal">1</div>
+            <div class="stat-label">PROMPT AWAY</div>
+            <div class="stat-sub">from any Tableau solution</div>
+        </div>
+    </div>
+ 
+</section>
+ 
+<!-- ============================================
+     USE CASES — TITLE + SUBTEXT
+============================================ -->
+<section class="usecase-section">
+    <h2 class="usecase-title">10 Use Cases. One Copilot.</h2>
+    <p class="usecase-sub">
+        Each card gives you the exact Copilot prompt to solve that Tableau requirement — right now.
+    </p>
+ 
+    <div class="usecase-callout">
+        ◈ <strong>THIS IS NOT A THEORY GUIDE</strong> — Every prompt is tested against real Tableau scenarios.
+        Copy. Paste. Ship.
+    </div>
+ 
+    <div class="usecase-grid">
+ 
+        <!-- ========== USE CASE 01 ========== -->
+        <div class="usecase-card">
+            <div class="card-num purple">01</div>
+            <div>
+                <h3 class="card-title">Building Dashboards from Scratch</h3>
+                <p class="card-desc">
+                    Get step‑by‑step layout guidance and generated worksheets based on your data.
+                </p>
+ 
+                <details class="prompt-box">
+                    <summary>Copilot Prompt to Use ▸</summary>
+                    <button class="copy-btn">COPY</button>
+<pre class="prompt-text">
+"Generate a complete Tableau dashboard layout based on this data source..."
+</pre>
+                </details>
+            </div>
+        </div>
+ 
+        <!-- ========== USE CASE 02 ========== -->
+        <div class="usecase-card">
+            <div class="card-num purple">02</div>
+            <div>
+                <h3 class="card-title">Fixing & Debugging a Visualization</h3>
+                <p class="card-desc">
+                    Get pinpoint explanations for why a viz is wrong — and the exact steps to fix it.
+                </p>
+ 
+                <details class="prompt-box">
+                    <summary>Copilot Prompt to Use ▸</summary>
+                    <button class="copy-btn">COPY</button>
+<pre class="prompt-text">
+"Help me debug this Tableau visualization..."
+</pre>
+                </details>
+            </div>
+        </div>
+ 
+        <!-- ========== USE CASE 03 ========== -->
+        <div class="usecase-card">
+            <div class="card-num teal">03</div>
+            <div>
+                <h3 class="card-title">Writing Calculated Fields & Formulas</h3>
+                <p class="card-desc">
+                    Generate correct Tableau formulas without memorizing syntax.
+                </p>
+ 
+                <details class="prompt-box">
+                    <summary>Copilot Prompt to Use ▸</summary>
+                    <button class="copy-btn">COPY</button>
+<pre class="prompt-text">
+"Write a Tableau calculated field that..."
+</pre>
+                </details>
+            </div>
+        </div>
+ 
+        <!-- ========== USE CASE 04 ========== -->
+        <div class="usecase-card">
+            <div class="card-num purple">04</div>
+            <div>
+                <h3 class="card-title">Connecting to Data Sources</h3>
+                <p class="card-desc">
+                    Simplify connection steps for any database — including joins and schema checks.
+                </p>
+ 
+                <details class="prompt-box">
+                    <summary>Copilot Prompt to Use ▸</summary>
+                    <button class="copy-btn">COPY</button>
+<pre class="prompt-text">
+"Guide me through connecting Tableau to..."
+</pre>
+                </details>
+            </div>
+        </div>
+ 
+        <!-- ========== USE CASE 05 ========== -->
+        <div class="usecase-card">
+            <div class="card-num teal">05</div>
+            <div>
+                <h3 class="card-title">Designing for Leadership & Executives</h3>
+                <p class="card-desc">
+                    Get dashboard layouts that reflect business‑level clarity and messaging.
+                </p>
+ 
+                <details class="prompt-box">
+                    <summary>Copilot Prompt to Use ▸</summary>
+                    <button class="copy-btn">COPY</button>
+<pre class="prompt-text">
+"Design an executive-ready Tableau dashboard for..."
+</pre>
+                </details>
+            </div>
+        </div>
+ 
+        <!-- ========== USE CASE 06 ========== -->
+        <div class="usecase-card">
+            <div class="card-num purple">06</div>
+            <div>
+                <h3 class="card-title">Performance Optimization</h3>
+                <p class="card-desc">
+                    Diagnose slow dashboards and get targeted improvements instantly.
+                </p>
+ 
+                <details class="prompt-box">
+                    <summary>Copilot Prompt to Use ▸</summary>
+                    <button class="copy-btn">COPY</button>
+<pre class="prompt-text">
+"Analyze why this Tableau dashboard is slow..."
+</pre>
+                </details>
+            </div>
+        </div>
+ 
+        <!-- ========== USE CASE 07 ========== -->
+        <div class="usecase-card">
+            <div class="card-num teal">07</div>
+            <div>
+                <h3 class="card-title">Creating LOD Expressions</h3>
+                <p class="card-desc">
+                    Build accurate FIXED, INCLUDE, EXCLUDE statements for any requirement.
+                </p>
+ 
+                <details class="prompt-box">
+                    <summary>Copilot Prompt to Use ▸</summary>
+                    <button class="copy-btn">COPY</button>
+<pre class="prompt-text">
+"Write an LOD expression that..."
+</pre>
+                </details>
+            </div>
+        </div>
+ 
+        <!-- ========== USE CASE 08 ========== -->
+        <div class="usecase-card">
+            <div class="card-num purple">08</div>
+            <div>
+                <h3 class="card-title">Building Parameters & Filters</h3>
+                <p class="card-desc">
+                    Auto‑generate parameter logic and dynamic filter systems.
+                </p>
+ 
+                <details class="prompt-box">
+                    <summary>Copilot Prompt to Use ▸</summary>
+                    <button class="copy-btn">COPY</button>
+<pre class="prompt-text">
+"Create a Tableau parameter that..."
+</pre>
+                </details>
+            </div>
+        </div>
+ 
+        <!-- ========== USE CASE 09 ========== -->
+        <div class="usecase-card">
+            <div class="card-num teal">09</div>
+            <div>
+                <h3 class="card-title">Storytelling with Data</h3>
+                <p class="card-desc">
+                    Turn insights into clear narrative sequences for stakeholders.
+                </p>
+ 
+                <details class="prompt-box">
+                    <summary>Copilot Prompt to Use ▸</summary>
+                    <button class="copy-btn">COPY</button>
+<pre class="prompt-text">
+"Help me structure a Tableau story that..."
+</pre>
+                </details>
+            </div>
+        </div>
+ 
+        <!-- ========== USE CASE 10 ========== -->
+        <div class="usecase-card">
+            <div class="card-num purple">10</div>
+            <div>
+                <h3 class="card-title">Publishing & Sharing Workbooks</h3>
+                <p class="card-desc">
+                    Automate publishing workflows, permissions & governance.
+                </p>
+ 
+                <details class="prompt-box">
+                    <summary>Copilot Prompt to Use ▸</summary>
+                    <button class="copy-btn">COPY</button>
+<pre class="prompt-text">
+"Guide me through publishing this Tableau workbook to..."
+</pre>
+                </details>
+            </div>
+        </div>
+ 
+    </div>
+</section>
+
+  <!-- ============================================
+     TRANSFORMATION — BEFORE / AFTER
+============================================ -->
+<section class="transform-section">
+ 
+    <div class="transform-label">T H E&nbsp;&nbsp;T R A N S F O R M A T I O N</div>
+ 
+    <h2 class="transform-title">What changes when you use Copilot for Tableau.</h2>
+ 
+    <!-- WITHOUT COPILOT -->
+    <div class="transform-card without" style="border-color:#ff4f4f;">
+        <div class="transform-header red">
+            ✕ WITHOUT COPILOT
+        </div>
+        <ul>
+            <li>Analysts spend hours searching docs for the right chart type</li>
+            <li>Calculated fields take 3 tries and a StackOverflow visit</li>
+            <li>Leadership asks for a change — you rebuild from scratch</li>
+            <li>Data connections break and there's no clear fix path</li>
+            <li>Formatting and design are guesswork</li>
+        </ul>
+    </div>
+ 
+    <div class="transform-arrow">↓</div>
+ 
+    <!-- WITH COPILOT -->
+    <div class="transform-card with" style="border-color:#00d4aa;">
+        <div class="transform-header green">
+            ✓ WITH COPILOT
+        </div>
+        <ul>
+            <li>Describe what you want — get the exact steps in seconds</li>
+            <li>Calculated fields generated, explained, and ready to paste</li>
+            <li>Leadership changes handled with one follow‑up prompt</li>
+            <li>Data connection errors diagnosed and resolved instantly</li>
+            <li>Design & formatting guided by best‑practice prompts</li>
+        </ul>
+    </div>
+ 
+</section>
+ 
+ 
+ 
+<!-- ============================================
+     REAL SCENARIOS — RETAIL CONTEXT
+============================================ -->
+<section class="scenario-section">
+ 
+    <h2 class="scenario-title">Real scenarios. Real prompts.</h2>
+ 
+    <div class="scenario-card">
+        <div class="scenario-label">⚡ S C E N A R I O</div>
+ 
+        <div class="scenario-question">
+            “My bar chart shows the right total but wrong breakdown by region. What’s wrong?”
+        </div>
+        <p class="scenario-explainer">
+            This usually points to a mismatch between aggregation levels, missing dimensions,
+            or a hidden filter affecting part of the view.
+        </p>
+        <div class="scenario-solve">
+            → Solved in Use Case 02 · Fixing & Debugging
+        </div>
+    </div>
+ 
+    <div class="scenario-card">
+        <div class="scenario-label">⚡ S C E N A R I O</div>
+ 
+        <div class="scenario-question">
+            “Leadership wants a KPI tile that turns red below target, yellow near it, green above. How?”
+        </div>
+        <p class="scenario-explainer">
+            Multi‑state KPI logic requires threshold logic + formatting rules that beginners rarely know.
+        </p>
+        <div class="scenario-solve">
+            → Solved in Use Case 03 · Calculated Fields
+        </div>
+    </div>
+ 
+    <div class="scenario-card">
+        <div class="scenario-label">⚡ S C E N A R I O</div>
+ 
+        <div class="scenario-question">
+            “My dashboard takes 45 seconds to load. What do I check first?”
+        </div>
+        <p class="scenario-explainer">
+            Slow dashboards come from extracts, filters, joins, blends, and mark counts — identifying the bottleneck is key.
+        </p>
+        <div class="scenario-solve">
+            → Solved in Use Case 06 · Performance Optimization
+        </div>
+    </div>
+ 
+</section>
+ 
+ 
+ 
+<!-- ============================================
+     WHAT YOU’LL MASTER — 4 CARDS
+============================================ -->
+<section class="master-section">
+ 
+    <div class="master-label">W H A T&nbsp;&nbsp;Y O U ' L L&nbsp;&nbsp;M A S T E R</div>
+ 
+    <h2 class="master-title">Walk out ready to ship.</h2>
+ 
+    <p class="master-sub">
+        Not just Tableau knowledge — Copilot workflows you can apply
+        the next morning on a real requirement.
+    </p>
+ 
+    <div class="master-grid">
+ 
+        <div class="master-card">
+            <div class="master-icon">🎯</div>
+            <div class="master-card-title" style="color:var(--purple);">
+                Prompt Any Requirement
+            </div>
+            <p class="master-desc">
+                Translate stakeholder asks into a working Copilot prompt 
+                in under 60 seconds.
+            </p>
+        </div>
+ 
+        <div class="master-card">
+            <div class="master-icon">🔧</div>
+            <div class="master-card-title" style="color:var(--purple);">
+                Debug Like a Senior
+            </div>
+            <p class="master-desc">
+                Diagnose broken vizzes, slow dashboards, 
+                and incorrect calcs fast.
+            </p>
+        </div>
+ 
+        <div class="master-card">
+            <div class="master-icon">📐</div>
+            <div class="master-card-title" style="color:var(--purple);">
+                Design for Leadership
+            </div>
+            <p class="master-desc">
+                Build exec‑ready dashboards with layout, color, 
+                and storytelling guidance.
+            </p>
+        </div>
+ 
+        <div class="master-card">
+            <div class="master-icon">🚀</div>
+            <div class="master-card-title" style="color:var(--purple);">
+                Ship Without Blockers
+            </div>
+            <p class="master-desc">
+                From data connection to published workbook — 
+                Copilot fills every gap.
+            </p>
+        </div>
+ 
+    </div>
+ 
+</section>
+
+  <!-- ============================================
+     YOUR COPILOT JOURNEY — PICK YOUR LEVEL
+============================================ -->
+<section class="copilot-journey">
+ 
+    <div class="journey-label">
+        Y O U R&nbsp;&nbsp;C O P I L O T&nbsp;&nbsp;J O U R N E Y&nbsp;&nbsp;·&nbsp;&nbsp;P I C K&nbsp;&nbsp;Y O U R&nbsp;&nbsp;L E V E L
+    </div>
+ 
+    <h2 class="journey-title">Where are you with Tableau?</h2>
+ 
+    <p class="journey-sub">
+        Copilot works differently depending on what you already know. 
+        Find your level — and start from exactly the right place.
+    </p>
+ 
+    <div class="journey-grid">
+ 
+        <!-- BEGINNER -->
+        #beginner" class="journey-card beginner-card">
+            <div class="journey-icon">🌱</div>
+            <div class="journey-level-label green">BEGINNER</div>
+            <h3 class="journey-card-title">I'm new to Tableau</h3>
+            <p class="journey-card-desc">
+                Never built a dashboard.<br>
+                Don’t know where to start.
+            </p>
+            <div class="journey-link green">Jump to my level →</div>
+        </a>
+ 
+        <!-- INTERMEDIATE -->
+        #intermediate" class="journey-card intermediate-card">
+            <div class="journey-icon">⚡</div>
+            <div class="journey-level-label yellow">INTERMEDIATE</div>
+            <h3 class="journey-card-title">I know the basics</h3>
+            <p class="journey-card-desc">
+                I can build charts<br>
+                but struggle with complex logic.
+            </p>
+            <div class="journey-link yellow">Jump to my level →</div>
+        </a>
+ 
+        <!-- ADVANCED -->
+        #advanced" class="journey-card advanced-card">
+            <div class="journey-icon">🚀</div>
+            <div class="journey-level-label purple">ADVANCED</div>
+            <h3 class="journey-card-title">I'm fluent in Tableau</h3>
+            <p class="journey-card-desc">
+                I know Tableau well.<br>
+                I want Copilot to make me sharper.
+            </p>
+            <div class="journey-link purple">Jump to my level →</div>
+        </a>
+ 
+    </div>
+</section>
+ 
+ 
+ 
+<!-- ============================================
+     LEVEL 01 · BEGINNER
+============================================ -->
+<section id="beginner" class="level-beginner">
+ 
+    <div class="level-label green-label">
+        🌱 L E V E L&nbsp;&nbsp;0 1&nbsp;&nbsp;·&nbsp;&nbsp;B E G I N N E R
+    </div>
+ 
+    <h2 class="level-headline">
+        You don't need to learn Tableau. You need to learn what to ask.
+    </h2>
+ 
+    <p class="level-subtext">
+        Copilot becomes your Tableau teacher, your syntax guide, and your error fixer — all at once. 
+        Here's how to use it from day one.
+    </p>
+ 
+    <div class="level-steps">
+ 
+        <!-- STEP 01 -->
+        <div class="level-step-card">
+            <div class="step-number">STEP 01</div>
+            <h3 class="step-title">Understand What Tableau Even Does</h3>
+ 
+            <p class="step-expl">
+                Before touching the tool, ask Copilot to explain Tableau's purpose in simple,
+                role‑relevant language.
+            </p>
+ 
+            <p class="step-scenario">
+                <strong>Retail Scenario:</strong> You join FreshMart's analytics team and you're told
+                "you'll be working in Tableau" — but you don't know what Tableau does.
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+<pre class="step-text">
+"Explain what Tableau is used for in a retail business context.
+I'm new to data analytics. Tell me what questions Tableau helps answer,
+what data it connects to, and what I'll be building day-to-day
+as a junior analyst at a retail company."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- STEP 02 -->
+        <div class="level-step-card">
+            <div class="step-number">STEP 02</div>
+            <h3 class="step-title">Understand Your Data Before Connecting</h3>
+ 
+            <p class="step-expl">
+                The #1 beginner mistake is connecting data without knowing what’s inside it. 
+                Copilot helps you ask the right questions first.
+            </p>
+ 
+            <p class="step-scenario">
+                <strong>Retail Scenario:</strong> Your manager sends a 40,000‑row Excel file
+                “FreshMart_Sales_Q1.xlsx” and says “build a dashboard.”
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+<pre class="step-text">
+"I've received an Excel file with retail sales data. Before I connect it to Tableau,
+what questions should I ask about the data?
+Help me identify the grain, the key fields, potential data quality issues,
+and how to check if it's structured correctly for Tableau."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- STEP 03 -->
+        <div class="level-step-card">
+            <div class="step-number">STEP 03</div>
+            <h3 class="step-title">Connect Data & Understand the Data Pane</h3>
+ 
+            <p class="step-expl">
+                The moment beginners see blue vs green fields, they get confused. 
+                Copilot can explain the entire pane for your dataset.
+            </p>
+ 
+            <p class="step-scenario">
+                <strong>Retail Scenario:</strong> You connect the FreshMart file — and half the fields
+                are blue, half green. You have no idea why.
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+<pre class="step-text">
+"I connected an Excel file to Tableau and see blue and green fields.
+Explain what dimensions vs measures mean, why the distinction matters,
+and classify these FreshMart fields (Store Name, Order Date,
+Sales Amount, Category) with reasons."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- STEP 04 -->
+        <div class="level-step-card">
+            <div class="step-number">STEP 04</div>
+            <h3 class="step-title">Build Your First Chart Using Copilot as a Guide</h3>
+ 
+            <p class="step-expl">
+                Copilot gives you drag‑and‑drop instructions tailored to your fields.
+            </p>
+ 
+            <p class="step-scenario">
+                <strong>Retail Scenario:</strong> Your manager wants a bar chart of total sales by category for this month.
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+<pre class="step-text">
+"I need to build a bar chart showing total sales by product category for this month.
+I have Category, Order Date, and Sales Amount.
+Walk me through each drag-and-drop step, which shelf each field belongs on,
+and how to sort bars from highest to lowest."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- STEP 05 -->
+        <div class="level-step-card">
+            <div class="step-number">STEP 05</div>
+            <h3 class="step-title">Understand Why Your Chart Looks Wrong</h3>
+ 
+            <p class="step-expl">
+                New users often create one giant bar instead of one per category. 
+                Copilot explains exactly why.
+            </p>
+ 
+            <p class="step-scenario">
+                <strong>Retail Scenario:</strong> You drag Sales to Columns + Category to Rows — but see only one bar.
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+<pre class="step-text">
+"I built a bar chart using Sales Amount on Columns and Product Category on Rows,
+but I see only one bar. Explain why Tableau is aggregating my data into a single bar,
+what SUM(Sales) means, and how to fix it so I get one bar per category."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- STEP 06 -->
+        <div class="level-step-card">
+            <div class="step-number">STEP 06</div>
+            <h3 class="step-title">Ask Copilot to Explain Any Error Message</h3>
+ 
+            <p class="step-expl">
+                Tableau error messages are cryptic. Copilot translates them into human language.
+            </p>
+ 
+            <p class="step-scenario">
+                <strong>Retail Scenario:</strong> You get: 
+                “Cannot mix aggregate and non‑aggregate arguments with this function.”
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+<pre class="step-text">
+"I got this error: 'Cannot mix aggregate and non-aggregate arguments with this function.'
+Explain what it means in simple terms, why it occurs,
+and show me how to fix a calculation using Sales Amount and Profit."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- STEP 07 -->
+        <div class="level-step-card">
+            <div class="step-number">STEP 07</div>
+            <h3 class="step-title">Build Your First Dashboard</h3>
+ 
+            <p class="step-expl">
+                Copilot guides you through layout, sizing, titles, and interactive filters.
+            </p>
+ 
+            <p class="step-scenario">
+                <strong>Retail Scenario:</strong> You have 3 sheets — now your manager wants a combined dashboard.
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+<pre class="step-text">
+"I have 3 worksheets — a bar chart, a line chart, and a KPI.
+Walk me through creating a dashboard, placing sheets, setting layout,
+adding a title, and creating a filter action
+so clicking a bar filters the other charts."
+</pre>
+            </details>
+        </div>
+ 
+    </div>
+</section>
+
+  <!-- ============================================
+     LEVEL 02 · INTERMEDIATE
+============================================ -->
+<section id="intermediate" class="level-intermediate">
+ 
+    <div class="level-label amber-label">
+        ⚡ L E V E L&nbsp;&nbsp;0 2&nbsp;&nbsp;·&nbsp;&nbsp;I N T E R M E D I A T E
+    </div>
+ 
+    <h2 class="level-headline">
+        You know enough to build. Now learn enough to build it right.
+    </h2>
+ 
+    <p class="level-subtext">
+        These are the prompts that bridge the gap between “it works”
+        and “it's actually correct.” 
+        Copilot helps you stop guessing and start understanding.
+    </p>
+ 
+ 
+    <div class="level-steps">
+ 
+        <!-- SCENARIO 01 -->
+        <div class="intermediate-card">
+            <div class="scenario-title">SCENARIO 01 — Your Calculations Work Sometimes</div>
+ 
+            <p class="scenario-problem">
+                <strong>Problem:</strong> Your IF/THEN works on one sheet but returns NULL on another.
+            </p>
+ 
+            <p class="scenario-retail">
+                <strong>Retail Scenario:</strong> Your Margin % calc works on product sheet 
+                but shows NULL on store sheet.
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"I have a calculated field: [Margin %] = (SUM([Sales]) - SUM([Cost])) / SUM([Sales]).
+It works on my product-level sheet but shows NULL on my store-level sheet.
+Explain why this happens and how to fix it — covering aggregation differences,
+how dimensions in the view affect measure calcs, and whether I need an LOD instead."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- SCENARIO 02 -->
+        <div class="intermediate-card">
+            <div class="scenario-title">SCENARIO 02 — Your Filters Are Giving Wrong Results</div>
+ 
+            <p class="scenario-problem">
+                <strong>Problem:</strong> Top N + Region filter returns unexpected rows.
+            </p>
+ 
+            <p class="scenario-retail">
+                <strong>Retail Scenario:</strong> FreshMart wants Top 10 products in North 
+                but Tableau shows global Top 10 instead.
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"I have a Top 10 filter on Product Name and a Region filter = 'North'.
+But the Top 10 shows products with no North sales.
+Explain Tableau's filter order of operations, why this happens,
+and walk me through using a Context Filter to fix it."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- SCENARIO 03 -->
+        <div class="intermediate-card">
+            <div class="scenario-title">SCENARIO 03 — You Need Year-over-Year Comparison</div>
+ 
+            <p class="scenario-problem">
+                <strong>Problem:</strong> You want this year vs last year on the same axis.
+            </p>
+ 
+            <p class="scenario-retail">
+                <strong>Retail Scenario:</strong> FreshMart wants monthly sales 2024 vs 2023.
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"I want a YoY comparison showing monthly sales for this year and prior year
+as separate lines. My date field is Order Date.
+Walk me through the best approach — calculated field vs table calc vs LOD —
+and provide correct syntax with explanation."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- SCENARIO 04 -->
+        <div class="intermediate-card">
+            <div class="scenario-title">SCENARIO 04 — Your Dashboard is Slow</div>
+ 
+            <p class="scenario-problem">
+                <strong>Problem:</strong> Dashboard loads slowly on a live connection.
+            </p>
+ 
+            <p class="scenario-retail">
+                <strong>Retail Scenario:</strong> FreshMart’s weekly tracker has 8 sheets + live SQL; 25‑second load.
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"My dashboard has 8 worksheets on a live SQL Server connection and takes 25 seconds.
+Walk me through using Performance Recorder, the most common causes,
+and give me a priority list of fixes — from extract vs live to filter order."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- SCENARIO 05 -->
+        <div class="intermediate-card">
+            <div class="scenario-title">SCENARIO 05 — Parameters Feel Complicated</div>
+ 
+            <p class="scenario-problem">
+                <strong>Problem:</strong> You haven’t successfully used parameters before.
+            </p>
+ 
+            <p class="scenario-retail">
+                <strong>Retail Scenario:</strong> FreshMart wants a metric selector: Sales, Profit, Units.
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"I want a dynamic metric selector in Tableau: Sales, Profit, or Units Sold.
+Walk me through creating the parameter, the calculated field,
+and connecting it to every chart on the dashboard."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- SCENARIO 06 -->
+        <div class="intermediate-card">
+            <div class="scenario-title">SCENARIO 06 — You Don’t Know When to Use LOD</div>
+ 
+            <p class="scenario-problem">
+                <strong>Problem:</strong> You’re unsure if your requirement needs FIXED, table calc, or agg.
+            </p>
+ 
+            <p class="scenario-retail">
+                <strong>Retail Scenario:</strong> FreshMart wants each store’s sales + company average, 
+                regardless of filters.
+            </p>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"Explain when to use an LOD vs a normal aggregation vs a table calculation.
+Then write a FIXED LOD for company-wide average sales that ignores filters.
+Also show how to display it next to each store’s sales bar."
+</pre>
+            </details>
+        </div>
+ 
+    </div>
+</section>
+ 
+ 
+ 
+<!-- ============================================
+     LEVEL 03 · ADVANCED
+============================================ -->
+<section id="advanced" class="level-advanced">
+ 
+    <div class="level-label purple-label">
+        🚀 L E V E L&nbsp;&nbsp;0 3&nbsp;&nbsp;·&nbsp;&nbsp;A D V A N C E D
+    </div>
+ 
+    <h2 class="level-headline">
+        You already know Tableau. Now use Copilot to think faster than your stakeholders.
+    </h2>
+ 
+    <p class="level-subtext">
+        At this level, Copilot isn't your teacher — it's your senior thought partner. 
+        Use it to pressure‑test your logic, generate alternatives, and document everything.
+    </p>
+ 
+ 
+    <div class="level-steps">
+ 
+        <!-- POWER USE 01 -->
+        <div class="advanced-card">
+            <div class="power-title">POWER USE 01 — Pressure-Test Your Logic</div>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"Here is a calculated field I've written in Tableau: [paste calc].
+I'm using it for [business purpose].
+Review this logic, identify edge cases, suggest a more robust version,
+and explain trade-offs between my approach and yours."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- POWER USE 02 -->
+        <div class="advanced-card">
+            <div class="power-title">POWER USE 02 — Generate Multiple Approaches</div>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"I need to calculate customer retention rate in Tableau — customers who bought last month
+AND this month. Provide 3 approaches (LOD, table calc, data prep),
+their pros/cons for a 500K-row dataset, and your recommendation prioritizing performance."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- POWER USE 03 -->
+        <div class="advanced-card">
+            <div class="power-title">POWER USE 03 — Translate Stakeholder Language</div>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"A stakeholder said: 'Which stores are punching above their weight?'
+Translate this into a Tableau analytical plan: required metrics, fields,
+logic, calculations, and best chart type."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- POWER USE 04 -->
+        <div class="advanced-card">
+            <div class="power-title">POWER USE 04 — Document What You Built</div>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"I built a Tableau dashboard for retail. Here are the calculated fields: [paste].
+Write technical documentation explaining each calc, its purpose,
+dependencies, and limitations — so another analyst can maintain it."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- POWER USE 05 -->
+        <div class="advanced-card">
+            <div class="power-title">POWER USE 05 — Redesign for Performance</div>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"My workbook has 12 calcs, 3 LODs, 2 blended sources, and a live SQL connection.
+Guide me through a Tableau performance audit — what to measure,
+what to push to the database, what to extract, and how to restructure."
+</pre>
+            </details>
+        </div>
+ 
+ 
+        <!-- POWER USE 06 -->
+        <div class="advanced-card">
+            <div class="power-title">POWER USE 06 — Build Copilot Into Your Review Process</div>
+ 
+            <details class="step-prompt">
+                <summary>COPILOT PROMPT TO USE ▸</summary>
+                <button class="step-copy">COPY</button>
+ 
+<pre class="step-text">
+"Before I publish this dashboard for 80 stakeholders, give me a pre-publish checklist:
+calc validation, filter logic checks, performance benchmarks, RLS verification,
+naming conventions, mobile layout, and a 20-minute UAT script with a business user."
+</pre>
+            </details>
+        </div>
+ 
+    </div>
+ 
+</section>
+
+  <!-- ============================================
+     WHAT COPILOT CAN'T DO — HONEST CALLOUT
+============================================ -->
+<section class="copilot-limitations-banner">
+ 
+    <h2 class="limitations-title">
+        What Copilot can't do in Tableau — and what that means for you.
+    </h2>
+ 
+    <div class="limitations-grid">
+ 
+        <div class="limit-col">
+            <div class="limit-icon">❌</div>
+            <div class="limit-head">It can't click for you</div>
+            <p class="limit-desc">
+                Copilot generates logic and steps. You still drag, drop, and build in Tableau. 
+                Like GPS: it navigates — you drive.
+            </p>
+        </div>
+ 
+        <div class="limit-col">
+            <div class="limit-icon">❌</div>
+            <div class="limit-head">It can't see your live data</div>
+            <p class="limit-desc">
+                Unless you paste a screenshot or explain your fields, Copilot only knows 
+                what you tell it. More context = better answers.
+            </p>
+        </div>
+ 
+        <div class="limit-col">
+            <div class="limit-icon">❌</div>
+            <div class="limit-head">It can't guarantee correctness</div>
+            <p class="limit-desc">
+                Always validate calculated fields against known numbers. 
+                Copilot gives a first draft — you make the final call.
+            </p>
+        </div>
+ 
+    </div>
+ 
+    <p class="limitations-bottom">
+        <em>Used well, Copilot makes a good Tableau analyst great. It doesn't replace the analyst.</em>
+    </p>
+ 
+</section>
+ 
+ 
+ 
+<!-- ============================================
+     KNOW THE WALLS · TABLEAU LIMITATIONS
+============================================ -->
+<section class="tableau-limitations">
+ 
+    <div class="limitations-label">
+        K N O W&nbsp;&nbsp;T H E&nbsp;&nbsp;W A L L S&nbsp;&nbsp;·&nbsp;&nbsp;T A B L E A U&nbsp;&nbsp;L I M I T A T I O N S
+    </div>
+ 
+    <h2 class="limitations-headline">
+        Where Tableau stops. And what to do next.
+    </h2>
+ 
+    <p class="limitations-subtext">
+        Every experienced analyst has hit these walls. These are real, documented limitations — 
+        along with the exact Copilot prompts to navigate each one.
+    </p>
+ 
+    <div class="limitations-callout">
+        ⚠ These are not bugs. These are by-design constraints you need to architect around.
+    </div>
+ 
+</section>
+ 
+ 
+ 
+<!-- ============================================
+     LIMITATION CARDS — RED ACCENT WALLS
+============================================ -->
+<section class="limitation-cards">
+ 
+ 
+    <!-- LIMITATION 01 -->
+    <div class="limitation-card">
+        <div class="limitation-label">LIMITATION 01 — Cannot Mix Aggregate & Non‑Aggregate</div>
+ 
+        <div class="limit-block">
+            <h4>THE LIMITATION</h4>
+            <p>You cannot combine SUM([Sales]) with row‑level [Sales] in the same expression.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WHY IT HAPPENS</h4>
+            <p>Aggregate and row‑level calcs run at different granularities — Tableau cannot resolve both together.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>RETAIL SCENARIO</h4>
+            <p>You try SUM([Sales]) / [Sales] to get product share — Tableau errors out.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WORKAROUND</h4>
+            <p>Use a FIXED LOD: <code>{FIXED : SUM([Sales])}</code> then divide aggregated values.</p>
+        </div>
+ 
+        <details class="limit-prompt">
+            <summary>COPILOT PROMPT TO USE ▸</summary>
+            <button class="limit-copy">COPY</button>
+<pre class="limit-text">
+"I'm getting this Tableau error: 'Cannot mix aggregate and non-aggregate arguments.'
+Explain why this happens and show me how to fix product-level share of sales using a FIXED LOD."
+</pre>
+        </details>
+    </div>
+ 
+ 
+ 
+    <!-- LIMITATION 02 -->
+    <div class="limitation-card">
+        <div class="limitation-label">LIMITATION 02 — FIXED LOD Ignores Dimension Filters</div>
+ 
+        <div class="limit-block">
+            <h4>THE LIMITATION</h4>
+            <p>FIXED LODs compute before dimension filters — ignoring user selections.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WHY IT HAPPENS</h4>
+            <p>FIXED LOD sits higher in Tableau's filter order — above dimension filters.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>RETAIL SCENARIO</h4>
+            <p>Region filter = "North", but FIXED company sales still show all regions.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WORKAROUND</h4>
+            <p>Promote Region to Context or rewrite with INCLUDE.</p>
+        </div>
+ 
+        <details class="limit-prompt">
+            <summary>COPILOT PROMPT TO USE ▸</summary>
+            <button class="limit-copy">COPY</button>
+<pre class="limit-text">
+"My FIXED LOD ignores Region filter. Explain why this happens and give two fixes:
+(1) promote to Context, (2) rewrite using INCLUDE — with syntax."
+</pre>
+        </details>
+    </div>
+ 
+ 
+ 
+    <!-- LIMITATION 03 -->
+    <div class="limitation-card">
+        <div class="limitation-label">LIMITATION 03 — Data Blending Only Supports Left Joins</div>
+ 
+        <div class="limit-block">
+            <h4>THE LIMITATION</h4>
+            <p>Blending always performs a left join from primary → secondary.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WHY IT HAPPENS</h4>
+            <p>Blending is a post‑query merge at the granularity of the link field — not a database join.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>RETAIL SCENARIO</h4>
+            <p>Stores with no targets appear anyway (with NULL values).</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WORKAROUND</h4>
+            <p>Use Relationships/Joins or wrap secondary fields with <code>ZN()</code>.</p>
+        </div>
+ 
+        <details class="limit-prompt">
+            <summary>COPILOT PROMPT TO USE ▸</summary>
+            <button class="limit-copy">COPY</button>
+<pre class="limit-text">
+"I'm blending POS (primary) with Targets (secondary). Explain why blending only supports
+left joins and how to fix NULL target values using ZN() or a Relationship instead."
+</pre>
+        </details>
+    </div>
+ 
+ 
+ 
+    <!-- LIMITATION 04 -->
+    <div class="limitation-card">
+        <div class="limitation-label">LIMITATION 04 — Table Calcs Cannot Be Used Inside LODs</div>
+ 
+        <div class="limit-block">
+            <h4>THE LIMITATION</h4>
+            <p>You cannot nest RUNNING_SUM, RANK, WINDOW functions inside FIXED LODs.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WHY IT HAPPENS</h4>
+            <p>LODs compute before the view; table calcs compute after the view is built — incompatible order.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>RETAIL SCENARIO</h4>
+            <p>You attempt RUNNING_SUM inside a FIXED LOD and Tableau errors out.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WORKAROUND</h4>
+            <p>Compute LOD first → bring into view → apply table calc separately.</p>
+        </div>
+ 
+        <details class="limit-prompt">
+            <summary>COPILOT PROMPT TO USE ▸</summary>
+            <button class="limit-copy">COPY</button>
+<pre class="limit-text">
+"Explain why table calcs cannot be nested inside LOD expressions and show how to restructure
+the logic to compute cumulative sales correctly without nesting."
+</pre>
+        </details>
+    </div>
+ 
+ 
+ 
+    <!-- LIMITATION 05 -->
+    <div class="limitation-card">
+        <div class="limitation-label">LIMITATION 05 — Parameters Are Not Dynamic Across Users</div>
+ 
+        <div class="limit-block">
+            <h4>THE LIMITATION</h4>
+            <p>Parameters have one global value and do not auto‑refresh with new data.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WHY IT HAPPENS</h4>
+            <p>Parameters are static workbook variables unless configured as Dynamic Parameters.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>RETAIL SCENARIO</h4>
+            <p>New product categories do not appear until a developer republishes the workbook.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WORKAROUND</h4>
+            <p>Use Dynamic Parameters (Tableau 2020.1+) or replace with filters.</p>
+        </div>
+ 
+        <details class="limit-prompt">
+            <summary>COPILOT PROMPT TO USE ▸</summary>
+            <button class="limit-copy">COPY</button>
+<pre class="limit-text">
+"Explain why Tableau parameters don't auto-update with new data and walk me through
+creating a Dynamic Parameter that refreshes from the data source."
+</pre>
+        </details>
+    </div>
+ 
+ 
+ 
+    <!-- LIMITATION 06 -->
+    <div class="limitation-card">
+        <div class="limitation-label">LIMITATION 06 — COUNTD Is Slow and Sometimes Approximate</div>
+ 
+        <div class="limit-block">
+            <h4>THE LIMITATION</h4>
+            <p>COUNTD is one of the heaviest operations in Tableau.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WHY IT HAPPENS</h4>
+            <p>Distinct counts require full de‑duplication — expensive on large datasets.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>RETAIL SCENARIO</h4>
+            <p>COUNTD(Customer ID) on 2M rows makes dashboard slow on live SQL.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WORKAROUND</h4>
+            <p>Pre‑aggregate, use extracts, or leverage approximate count functions.</p>
+        </div>
+ 
+        <details class="limit-prompt">
+            <summary>COPILOT PROMPT TO USE ▸</summary>
+            <button class="limit-copy">COPY</button>
+<pre class="limit-text">
+"My COUNTD(Customer ID) calc is slowing down my dashboard.
+Explain why COUNTD is expensive and how to optimize using extracts or pre-aggregation."
+</pre>
+        </details>
+    </div>
+ 
+ 
+ 
+    <!-- LIMITATION 07 -->
+    <div class="limitation-card">
+        <div class="limitation-label">LIMITATION 07 — Secondary LOD Requires Link Field in View</div>
+ 
+        <div class="limit-block">
+            <h4>THE LIMITATION</h4>
+            <p>Secondary-source LODs only work if the linking field is visible in the primary view.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WHY IT HAPPENS</h4>
+            <p>Blending queries secondary data only at the level of the visible link field.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>RETAIL SCENARIO</h4>
+            <p>Your secondary FIXED LOD fails because Store ID (link field) is not on the view.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WORKAROUND</h4>
+            <p>Add the linking field to Detail or restructure using joins/relationships.</p>
+        </div>
+ 
+        <details class="limit-prompt">
+            <summary>COPILOT PROMPT TO USE ▸</summary>
+            <button class="limit-copy">COPY</button>
+<pre class="limit-text">
+"My FIXED LOD from a secondary source errors out unless the link field is on the view.
+Explain why and show how to fix it without changing the chart visually."
+</pre>
+        </details>
+    </div>
+ 
+ 
+ 
+    <!-- LIMITATION 08 -->
+    <div class="limitation-card">
+        <div class="limitation-label">LIMITATION 08 — Floating Point Measures Cause Comparison Errors</div>
+ 
+        <div class="limit-block">
+            <h4>THE LIMITATION</h4>
+            <p>Decimals like 0.32 may return as 0.320000001 — breaking equality tests.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WHY IT HAPPENS</h4>
+            <p>Binary floating‑point values cannot represent many decimals exactly.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>RETAIL SCENARIO</h4>
+            <p>Two margins that should equal 0.32 compare as different in an IF statement.</p>
+        </div>
+ 
+        <div class="limit-block">
+            <h4>WORKAROUND</h4>
+            <p>Use ROUND() or tolerance ranges (<code>ABS(x - y) &lt; 0.0001</code>).</p>
+        </div>
+ 
+        <details class="limit-prompt">
+            <summary>COPILOT PROMPT TO USE ▸</summary>
+            <button class="limit-copy">COPY</button>
+<pre class="limit-text">
+"My LOD margin value is slightly off due to floating point precision.
+Explain why and show how to fix comparisons using ROUND() or tolerance logic."
+</pre>
+        </details>
+    </div>
+ 
+</section>
+
+  <!-- ============================================
+     QUICK REFERENCE — LIMITATIONS AT A GLANCE
+============================================ -->
+<section class="limitations-summary">
+ 
+    <h2 class="summary-title">Quick Reference — Tableau Limitations at a Glance</h2>
+ 
+    <table class="limit-ref-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Limitation</th>
+                <th>Error / Symptom</th>
+                <th>Quick Fix</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>01</td>
+                <td>Mixing Aggregate / Non‑Aggregate</td>
+                <td>"Cannot mix aggregate and non‑aggregate"</td>
+                <td>Use FIXED to align granularity</td>
+            </tr>
+            <tr>
+                <td>02</td>
+                <td>FIXED LOD Ignores Filters</td>
+                <td>Totals don't change with filters</td>
+                <td>Use Context or INCLUDE</td>
+            </tr>
+            <tr>
+                <td>03</td>
+                <td>Blending = Left Join Only</td>
+                <td>NULL secondary values</td>
+                <td>Use Relationships / Joins</td>
+            </tr>
+            <tr>
+                <td>04</td>
+                <td>LOD + Table Calc Conflict</td>
+                <td>Cannot nest RUNNING_SUM</td>
+                <td>Separate LOD → Table Calc</td>
+            </tr>
+            <tr>
+                <td>05</td>
+                <td>Parameters Not Dynamic</td>
+                <td>Values don’t update</td>
+                <td>Dynamic Parameters / Filters</td>
+            </tr>
+            <tr>
+                <td>06</td>
+                <td>COUNTD Is Slow</td>
+                <td>Long load times</td>
+                <td>Extracts / Pre‑aggregation</td>
+            </tr>
+            <tr>
+                <td>07</td>
+                <td>No Secondary LOD Without Link</td>
+                <td>LOD errors</td>
+                <td>Add link field to Detail</td>
+            </tr>
+            <tr>
+                <td>08</td>
+                <td>Floating‑Point Precision</td>
+                <td>Unexpected comparison failures</td>
+                <td>ROUND() or tolerance</td>
+            </tr>
+        </tbody>
+    </table>
+ 
+    <p class="summary-note">
+        Bookmark this section. You will hit every one of these in production.
+    </p>
+ 
+</section>
+ 
+ 
+ 
+ 
+<!-- ============================================
+     DIAGNOSTIC BANNER — "HIT A WALL? START HERE."
+============================================ -->
+<section class="limitations-diagnostic-banner">
+ 
+    <h2 class="diagnostic-title">Hit a wall? Start here.</h2>
+ 
+    <p class="diagnostic-sub">
+        When you don't know which limitation you've hit, use this diagnostic prompt first:
+    </p>
+ 
+    <div class="diagnostic-prompt-box">
+        <button class="diag-copy">COPY</button>
+<pre class="diagnostic-text">
+"I'm getting an unexpected result in Tableau.
+Here is what I'm trying to do: [describe your goal].
+Here is what's actually happening: [describe the result or error].
+Here are the fields and calculations I'm using: [paste field names and calc syntax].
+ 
+Based on this, diagnose which Tableau limitation or
+order-of-operations issue I've likely hit — and give me the most direct fix."
+</pre>
+    </div>
+ 
+    <p class="diagnostic-bottom">
+        <em>This single prompt resolves 80% of Tableau walls — because it forces you to describe exactly what you're seeing.</em>
+    </p>
+ 
+</section>
+
+  <!-- ============================================
+     BONUS SECTION — COPILOT BEYOND TABLEAU
+============================================ -->
+<section class="bonus-copilot-usage">
+ 
+    <div class="bonus-label">
+        B O N U S&nbsp;&nbsp;·&nbsp;&nbsp;C O P I L O T&nbsp;&nbsp;B E Y O N D&nbsp;&nbsp;T A B L E A U
+    </div>
+ 
+    <h2 class="bonus-title">How to use Copilot in Excel — and in your review meetings.</h2>
+ 
+    <p class="bonus-sub">
+        Copilot doesn’t just help with Tableau. 
+        It upgrades how you validate data, run QA, manage reviews, capture decisions, 
+        and document your work — automatically.
+    </p>
+ 
+ 
+    <!-- ============================================
+         BONUS GRID (EXCEL + MEETINGS + TESTING)
+    ============================================ -->
+    <div class="bonus-grid">
+ 
+ 
+        <!-- Excel: Data Validation -->
+        <div class="bonus-card">
+            <h3 class="bonus-card-title">✅ Use Copilot in Excel for Validations & Testing</h3>
+ 
+            <p class="bonus-card-desc">
+                Copilot can instantly audit datasets, find errors, test logic, 
+                and generate a complete data‑quality report — no formulas required.
+            </p>
+ 
+            <details class="bonus-prompt">
+                <summary>Strong Prompt to Use ▸</summary>
+                <button class="bonus-copy">COPY</button>
+ 
+<pre class="bonus-text">
+"I'm validating an Excel dataset for a Tableau dashboard.
+Here are the columns: [paste columns].
+ 
+Run a data-quality audit and return:
+• duplicates 
+• blank or null-sensitive fields 
+• inconsistent text values 
+• outliers in numeric fields 
+• date formatting issues 
+• possible foreign-key mismatches 
+• fields likely to break Tableau calculations 
+ 
+Provide a summary AND Excel formulas to fix each issue."
+</pre>
+            </details>
+        </div>
+ 
+ 
+ 
+        <!-- Excel: Regression Tests -->
+        <div class="bonus-card">
+            <h3 class="bonus-card-title">✅ Auto‑Generate Regression Tests for Tableau Metrics</h3>
+ 
+            <p class="bonus-card-desc">
+                Copilot can produce full regression test cases to ensure
+                Tableau metrics match Excel’s source data.
+            </p>
+ 
+            <details class="bonus-prompt">
+                <summary>Strong Prompt to Use ▸</summary>
+                <button class="bonus-copy">COPY</button>
+ 
+<pre class="bonus-text">
+"Here is my Tableau metric definition: [paste calculated field]. 
+Here is my Excel dataset: [paste fields].
+ 
+Generate regression tests that validate:
+• raw → aggregated values 
+• expected edge cases (zeros, nulls, negatives) 
+• max/min sanity checks 
+• alignment with Tableau’s final output 
+ 
+Give me EXACT Excel formulas, expected values, and pass/fail criteria."
+</pre>
+            </details>
+        </div>
+ 
+ 
+ 
+        <!-- Review Meetings: Notes to MoM -->
+        <div class="bonus-card">
+            <h3 class="bonus-card-title">🧠 Use Copilot During Review Meetings</h3>
+ 
+            <p class="bonus-card-desc">
+                Paste messy meeting notes into Copilot and get 
+                perfect MoMs: decisions, risks, owners, and timelines.
+            </p>
+ 
+            <details class="bonus-prompt">
+                <summary>Meeting Capture Prompt ▸</summary>
+                <button class="bonus-copy">COPY</button>
+ 
+<pre class="bonus-text">
+"Here are rough notes from a meeting: 
+[paste notes, screenshots, chat logs].
+ 
+Turn these into a complete MoM:
+• meeting summary 
+• decisions made 
+• open questions 
+• risks / dependencies 
+• blockers 
+• owner-assigned action items 
+• deadlines 
+• follow-up checkpoints 
+ 
+Write everything clearly and concisely."
+</pre>
+            </details>
+        </div>
+ 
+ 
+ 
+        <!-- Review Meetings: Extract Decisions -->
+        <div class="bonus-card">
+            <h3 class="bonus-card-title">🎥 Extract Decisions from Meetings Instantly</h3>
+ 
+            <p class="bonus-card-desc">
+                Copilot can read long transcripts and isolate every 
+                decision, reversal, risk, and assignment.
+            </p>
+ 
+            <details class="bonus-prompt">
+                <summary>Decision Extraction Prompt ▸</summary>
+                <button class="bonus-copy">COPY</button>
+ 
+<pre class="bonus-text">
+"Here is a transcript from a review meeting: 
+[paste transcript].
+ 
+Extract ONLY:
+• decisions made 
+• reversed decisions 
+• pending decisions 
+• deadlines 
+• owners responsible 
+• risks mentioned 
+• items requiring clarification 
+ 
+Return everything in a structured table."
+</pre>
+            </details>
+        </div>
+ 
+ 
+ 
+        <!-- To‑Do List Generator -->
+        <div class="bonus-card">
+            <h3 class="bonus-card-title">📝 Auto‑Generate Actionable To‑Do Lists</h3>
+ 
+            <p class="bonus-card-desc">
+                Copilot transforms vague notes into a clear, organized 
+                backlog with owners and acceptance criteria.
+            </p>
+ 
+            <details class="bonus-prompt">
+                <summary>To‑Do List Prompt ▸</summary>
+                <button class="bonus-copy">COPY</button>
+ 
+<pre class="bonus-text">
+"From these notes: 
+[paste raw notes].
+ 
+Create a prioritized to-do list:
+• break tasks into individual atomic actions 
+• assign owners based on context 
+• identify blockers 
+• add acceptance criteria 
+• estimate completion times 
+• arrange by priority 
+Format as a clean, readable table."
+</pre>
+            </details>
+        </div>
+ 
+    </div>
+ 
+</section>
+
+  <!-- ============================================
+     FOOTER
+============================================ -->
+<footer class="guide-footer">
+ 
+    <p class="footer-main">
+        Tableau × Copilot Guide — Practical Prompts for Real Requirements
+    </p>
+ 
+    <div class="footer-row">
+ 
+        #Glossary</a>
+ 
+        <button class="reset-btn" onclick="resetProgress()">
+            ↺ Reset Progress
+        </button>
+ 
+    </div>
+ 
+</footer>
+ 
+ 
+<!-- ============================================
+     BACK TO TOP BUTTON
+============================================ -->
+<button id="backToTop" class="back-to-top" onclick="scrollToTop()">
+    Back to Top ↑
+</button>
+ 
+ 
+<!-- ============================================
+     JAVASCRIPT — SCROLL PROGRESS + BACK TO TOP
+============================================ -->
+<script>
+// Scroll progress bar
+window.addEventListener("scroll", () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const fullHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / fullHeight) * 100;
+    document.getElementById("progress-bar").style.width = progress + "%";
+ 
+    // Back-to-top visibility
+    const btn = document.getElementById("backToTop");
+    if (scrollTop > 300) {
+        btn.classList.add("show");
+    } else {
+        btn.classList.remove("show");
+    }
+});
+ 
+// Smooth scroll to top
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+ 
+// Reset progress (example: clears localStorage or checkboxes)
+function resetProgress() {
+    localStorage.clear();
+    document.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = false);
+    alert("Progress reset successfully!");
+}
+</script>
+ 
+<!-- ============================================
+     END OF DOCUMENT
+============================================ -->
+ 
+</body>
+</html>
+ 
